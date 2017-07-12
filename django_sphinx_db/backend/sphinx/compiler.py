@@ -104,7 +104,8 @@ class SQLUpdateCompiler(compiler.SQLUpdateCompiler, SphinxQLCompiler):
                 placeholder = '%s'
 
             if hasattr(val, 'evaluate'):
-                val = SQLEvaluator(val, self.query, allow_joins=False)
+                logging.error("SQL Evaluator was deprecated!!!")
+            #    val = SQLEvaluator(val, self.query, allow_joins=False)
             name = field.column
             if hasattr(val, 'as_sql'):
                 sql, params = val.as_sql(qn, self.connection)
