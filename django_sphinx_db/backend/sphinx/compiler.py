@@ -59,6 +59,7 @@ class SphinxWhereNode(WhereNode):
 
 class SphinxQLCompiler(compiler.SQLCompiler):
     def get_columns(self, *args, **kwargs):
+        print "compiler - get_columns"
         columns = super(SphinxQLCompiler, self).get_columns(*args, **kwargs)
         for i, column in enumerate(columns):
             if '.' in column:
@@ -73,6 +74,7 @@ class SphinxQLCompiler(compiler.SQLCompiler):
     
         
     def compile(self, node, select_format=False):
+        print "compiler - compile"
         retval = super(SphinxQLCompiler, self).compile(node, select_format=select_format)
         if isinstance(node, Col):
             sql, params = retval
