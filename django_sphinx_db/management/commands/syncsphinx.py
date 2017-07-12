@@ -3,7 +3,7 @@ from optparse import make_option
 from django.db.models import fields
 from django.db.models.fields import related
 from django.conf import settings
-from django.utils.importlib import import_module
+import importlib.import_module as import_module
 from django.core.management.base import BaseCommand
 from django_sphinx_db.backend.models import SphinxModel, SphinxField
 
