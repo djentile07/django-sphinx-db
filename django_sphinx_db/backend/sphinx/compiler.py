@@ -2,7 +2,7 @@ from django.db.models.sql import compiler
 from django.db.models.sql.where import WhereNode
 EmptyShortCircuit = Exception
 EmptyResultSet = Exception
-from django.db.models.sql.expressions import SQLEvaluator
+#from django.db.models.sql.expressions import SQLEvaluator
 
 
 class SphinxWhereNode(WhereNode):
