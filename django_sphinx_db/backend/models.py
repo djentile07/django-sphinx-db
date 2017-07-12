@@ -41,6 +41,17 @@ class SphinxManager(models.Manager):
 class SphinxField(models.TextField):
     pass
 
+class SphinxSearch(models.Lookup):
+    lookup_name = 'search'
+
+    def as_mysql(self, compiler, connection):
+        lhs, lhs_params = self.process_lhs(compiler, connection)
+        rhs, rhs_params = self.process_rhs(compiler, connection)
+        params = lhs_params + rhs_params
+        print "MATCHY", lhs, rhs
+        return 'MATCH (%s) AGAINST (%s IN BOOLEAN MODE)' % (lhs, rhs), params
+
+SphinxField.register_lookup(SphinxSearch)
 
 class SphinxModel(models.Model):
     class Meta:
