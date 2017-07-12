@@ -53,7 +53,7 @@ class SphinxSearch(models.Lookup):
         params = lhs_params + rhs_params
         field = lhs.split(".")[-1] .replace("`", "")
         print "MATCH",rhs
-        return "MATCH ('@{} {}')".format(field, rhs), params
+        return "MATCH ('@{} {}')".format(field, params), []
 
 SphinxField.register_lookup(SphinxSearch)
 
