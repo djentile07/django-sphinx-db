@@ -74,7 +74,7 @@ class SphinxQLCompiler(compiler.SQLCompiler):
     
         
     def compile(self, node, select_format=False):
-        print "compiler - compile"
+        print "compiler - compile", node, type(node)
         retval = super(SphinxQLCompiler, self).compile(node, select_format=select_format)
         if isinstance(node, Col):
             sql, params = retval
