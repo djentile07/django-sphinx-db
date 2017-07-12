@@ -157,12 +157,8 @@ class SphinxQLCompiler(compiler.SQLCompiler):
                     result.append("%d," % self.query.low_mark)
                 limit = self.query.high_mark
                 if not limit:
-                    limit = self.connection.ops.no_limit_value()
-                    print "Lets try no limit", limit
-                    if not limit:
-                        import sys
-                        limit = sys.maxint
-                
+                    limit = 1000
+                             
                 result.append('%d' % (limit))
 
             if self.query.select_for_update and self.connection.features.has_select_for_update:
