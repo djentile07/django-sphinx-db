@@ -158,6 +158,7 @@ class SphinxQLCompiler(compiler.SQLCompiler):
                 limit = self.query.high_mark
                 if not limit:
                     limit = self.connection.ops.no_limit_value()
+                    print "Lets try no limit", limit
                     if not limit:
                         import sys
                         limit = sys.maxint
