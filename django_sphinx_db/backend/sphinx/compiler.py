@@ -2,24 +2,26 @@ from django.db.models.sql import compiler
 from django.db.models.sql.where import WhereNode
 EmptyShortCircuit = Exception
 EmptyResultSet = Exception
-import logging
 #from django.db.models.sql.expressions import SQLEvaluator
 
 
 class SphinxWhereNode(WhereNode):
     def sql_for_columns(self, data, qn, connection):
         table_alias, name, db_type = data
+        logging.error("t:{} n:{} d:".format(table_alias, name, db_type))
         return connection.ops.field_cast_sql(db_type) % name
 
     def as_sql(self, qn, connection):
         # TODO: remove this when no longer needed.
         # This is to remove the parenthesis from where clauses.
         # http://sphinxsearch.com/bugs/view.php?id=1150
+        
         sql, params = super(SphinxWhereNode, self).as_sql(qn, connection)
         if sql and sql[0] == '(' and sql[-1] == ')':
             # Trim leading and trailing parenthesis:
             sql = sql[1:]
             sql = sql[:-1]
+        logging.error("SQL:{} {}".format(sql, params))
         return sql, params
 
     def make_atom(self, child, qn, connection):
@@ -91,7 +93,6 @@ class SQLUpdateCompiler(compiler.SQLUpdateCompiler, SphinxQLCompiler):
         lvalue, lookup_type, value_annot, params_or_value = self.query.where.children[0].children[0]
         (table_name, column_name, column_type), val = lvalue.process(lookup_type, params_or_value, self.connection)
         fields, values, params = [column_name], ['%s'], [val[0]]
-        
         # Now build the rest of the fields into our query.
         for field, model, val in self.query.values:
             if hasattr(val, 'prepare_database_save'):
@@ -121,8 +122,6 @@ class SQLUpdateCompiler(compiler.SQLUpdateCompiler, SphinxQLCompiler):
             fields.append(name)
         result.append('(%s)' % ', '.join(fields))
         result.append('VALUES (%s)' % ', '.join(values))
-        print "Happening here!!"
-        logging.error("RESULT: {}".format(result))
         return ' '.join(result), params
 
 
