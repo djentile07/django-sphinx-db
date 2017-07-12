@@ -1,5 +1,6 @@
 from django.db.models.sql import compiler
 from django.db.models.sql.where import WhereNode
+from django.db.models.expressions import Col
 EmptyShortCircuit = Exception
 EmptyResultSet = Exception
 #from django.db.models.sql.expressions import SQLEvaluator
@@ -58,6 +59,7 @@ class SphinxWhereNode(WhereNode):
 
 class SphinxQLCompiler(compiler.SQLCompiler):
     def get_columns(self, *args, **kwargs):
+        print "Default columns"
         columns = super(SphinxQLCompiler, self).get_columns(*args, **kwargs)
         for i, column in enumerate(columns):
             if '.' in column:
@@ -69,6 +71,13 @@ class SphinxQLCompiler(compiler.SQLCompiler):
         # This is to remove the `` backticks from identifiers.
         # http://sphinxsearch.com/bugs/view.php?id=1150
         return name
+    
+        
+    def compile(self, node, select_format=False):
+        retval = super(SphinxQLCompiler, self).compile(node, select_format=select_format)
+        if isinstance(node, Col):
+            print "Return",retval
+        return retval
 
 # Set SQLCompiler appropriately, so queries will use the correct compiler.
 SQLCompiler = SphinxQLCompiler
