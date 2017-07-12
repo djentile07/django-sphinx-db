@@ -122,3 +122,8 @@ class SQLUpdateCompiler(compiler.SQLUpdateCompiler, SphinxQLCompiler):
         return ' '.join(result), params
 
 
+class SQLAggregateCompiler(SphinxQLCompiler):
+    pass
+
+class SQLDateCompiler(SphinxQLCompiler):
+    pass
