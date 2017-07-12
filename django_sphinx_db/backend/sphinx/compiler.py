@@ -122,9 +122,3 @@ class SQLUpdateCompiler(compiler.SQLUpdateCompiler, SphinxQLCompiler):
         return ' '.join(result), params
 
 
-class SQLAggregateCompiler(compiler.SQLAggregateCompiler, SphinxQLCompiler):
-    pass
-
-
-class SQLDateCompiler(compiler.SQLDateCompiler, SphinxQLCompiler):
-    pass
