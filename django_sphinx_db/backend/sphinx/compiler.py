@@ -72,14 +72,20 @@ class SphinxQLCompiler(compiler.SQLCompiler):
         # http://sphinxsearch.com/bugs/view.php?id=1150
         return name
     
-        
+    def as_sql(self, with_limits=True, with_col_aliases=False, subquery=False):
+        reval = super(SphinxQLCompiler, self).as_sql(with_limits=with_limits, 
+                                                    with_col_aliases=with_col_aliases, 
+                                                    subquery=subquery)
+        print "AS_SQL"
+        return retval
+
     def compile(self, node, select_format=False):
-        print "compiler - compile", node, type(node)
         retval = super(SphinxQLCompiler, self).compile(node, select_format=select_format)
         if isinstance(node, Col):
             sql, params = retval
             sql = sql.split(".")[-1] 
             retval = (sql, params)
+        print "compiler - compile", retval
         return retval
 
 # Set SQLCompiler appropriately, so queries will use the correct compiler.
