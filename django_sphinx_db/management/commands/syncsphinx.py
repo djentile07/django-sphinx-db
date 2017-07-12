@@ -78,13 +78,14 @@ def iter_fields(model):
 class Command(BaseCommand):
     args = ''
     help = 'Builds a configuration for Sphinx from your Django models.'
-    option_list = BaseCommand.option_list + (
-        make_option(
+
+    def add_arguments(self, parser):
+        parser.add_argument(
             '--directory',
-            default = '/var/indexes',
-            help = 'Data directory for index data files.',
-        ),
-    )
+            dest='directory',
+            type=str, default='/var/indexes', nargs='?',
+            help = 'Data directory for index data files.'
+        )
 
     def handle(self, *args, **kwargs):
         field_types = {}
