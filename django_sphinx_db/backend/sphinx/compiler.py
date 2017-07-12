@@ -2,6 +2,7 @@ from django.db.models.sql import compiler
 from django.db.models.sql.where import WhereNode
 EmptyShortCircuit = Exception
 EmptyResultSet = Exception
+import logging
 #from django.db.models.sql.expressions import SQLEvaluator
 
 
@@ -90,6 +91,7 @@ class SQLUpdateCompiler(compiler.SQLUpdateCompiler, SphinxQLCompiler):
         lvalue, lookup_type, value_annot, params_or_value = self.query.where.children[0].children[0]
         (table_name, column_name, column_type), val = lvalue.process(lookup_type, params_or_value, self.connection)
         fields, values, params = [column_name], ['%s'], [val[0]]
+        logging.error("f:{} v:{} p:".format(fields, values, params))
         # Now build the rest of the fields into our query.
         for field, model, val in self.query.values:
             if hasattr(val, 'prepare_database_save'):

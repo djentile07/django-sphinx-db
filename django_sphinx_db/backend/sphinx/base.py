@@ -40,3 +40,4 @@ class DatabaseWrapper(MySQLDatabaseWrapper):
         # use transactions for clearing data between tests when all OTHER backends
         # support it.
         self.features.supports_transactions = True
+        self.features.is_sql_auto_is_null_enabled = False
