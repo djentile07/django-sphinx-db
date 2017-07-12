@@ -59,7 +59,6 @@ class SphinxWhereNode(WhereNode):
 
 class SphinxQLCompiler(compiler.SQLCompiler):
     def get_columns(self, *args, **kwargs):
-        print "compiler - get_columns"
         columns = super(SphinxQLCompiler, self).get_columns(*args, **kwargs)
         for i, column in enumerate(columns):
             if '.' in column:
@@ -71,11 +70,7 @@ class SphinxQLCompiler(compiler.SQLCompiler):
         # This is to remove the `` backticks from identifiers.
         # http://sphinxsearch.com/bugs/view.php?id=1150
         return name
-    
-    def setup_query(self):
-        retval = super(SphinxQLCompiler, self).setup_query()
-        print "setup_query"
-        return retval
+
 
     def compile(self, node, select_format=False):
         retval = super(SphinxQLCompiler, self).compile(node, select_format=select_format)
@@ -157,12 +152,17 @@ class SphinxQLCompiler(compiler.SQLCompiler):
                 result.append('ORDER BY %s' % ', '.join(ordering))
 
             if with_limits:
-                if self.query.high_mark is not None:
-                    result.append('LIMIT %d' % (self.query.high_mark - self.query.low_mark))
+                result.append("LIMIT")
                 if self.query.low_mark:
-                    val = self.connection.ops.no_limit_value()
-                    if val:
-                        result.append('LIMIT %d, %d' % (self.query.low_mark, val))
+                    result.append("%d," % self.query.low_mark)
+                limit = self.query.high_mark
+                if not limit:
+                    limit = self.connection.ops.no_limit_value()
+                    if not limit:
+                        import sys
+                        limit = sys.maxint
+                
+                result.append('%d' % (limit))
 
             if self.query.select_for_update and self.connection.features.has_select_for_update:
                 if self.connection.get_autocommit():
