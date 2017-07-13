@@ -78,7 +78,6 @@ class SphinxQLCompiler(compiler.SQLCompiler):
             sql, params = retval
             sql = sql.split(".")[-1] 
             retval = (sql, params)
-        print "compiler - compile", retval
         return retval
 
     def as_sql(self, with_limits=True, with_col_aliases=False, subquery=False):
