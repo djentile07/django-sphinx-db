@@ -27,7 +27,7 @@ class SphinxCreation(MySQLDatabaseCreation):
 
 class SphinxValidation(BaseDatabaseValidation):
     def check(self, **kwargs):
-        return super(DatabaseValidation, self).check(**kwargs)
+        return super(BaseDatabaseValidation, self).check(**kwargs)
         
 
 class DatabaseWrapper(MySQLDatabaseWrapper):
