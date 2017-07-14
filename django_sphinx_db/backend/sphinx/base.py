@@ -11,7 +11,12 @@ class SphinxOperations(MySQLDatabaseOperations):
 
 
 class SphinxCreation(MySQLDatabaseCreation):
-    pass
+    def create_test_db(self, **kwargs):
+        return super(SphinxCreation, self).check(**kwargs)
+
+    def destroy_test_db(self, old_database_name, **kwargs):
+        # NOOP, we created nothing, nothing to destroy.
+        return
 
 class SphinxValidation(BaseDatabaseValidation):
     def check(self, **kwargs):
