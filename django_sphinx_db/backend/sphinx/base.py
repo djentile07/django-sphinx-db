@@ -15,7 +15,7 @@ class SphinxCreation(MySQLDatabaseCreation):
         #return super(SphinxCreation, self).create_test_db(**kwargs)
         return
 
-    def destroy_test_db(self, old_database_name, **kwargs):
+    def destroy_test_db(self, *args, **kwargs):
         # NOOP, we created nothing, nothing to destroy.
         return
 
