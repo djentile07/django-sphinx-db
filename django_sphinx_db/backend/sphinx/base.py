@@ -12,7 +12,8 @@ class SphinxOperations(MySQLDatabaseOperations):
 
 class SphinxCreation(MySQLDatabaseCreation):
     def create_test_db(self, **kwargs):
-        return super(SphinxCreation, self).create_test_db(**kwargs)
+        #return super(SphinxCreation, self).create_test_db(**kwargs)
+        return
 
     def destroy_test_db(self, old_database_name, **kwargs):
         # NOOP, we created nothing, nothing to destroy.
@@ -20,7 +21,11 @@ class SphinxCreation(MySQLDatabaseCreation):
 
 class SphinxValidation(BaseDatabaseValidation):
     def check(self, **kwargs):
-        return super(SphinxValidation, self).check(**kwargs)
+        #return super(SphinxValidation, self).check(**kwargs)
+        return []
+
+    def check_field_type(self, field, field_type):
+        return []
         
 
 class DatabaseWrapper(MySQLDatabaseWrapper):
