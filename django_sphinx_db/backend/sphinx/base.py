@@ -1,7 +1,7 @@
 from django.db.backends.mysql.base import DatabaseWrapper as MySQLDatabaseWrapper
 from django.db.backends.mysql.base import DatabaseOperations as MySQLDatabaseOperations
 from django.db.backends.mysql.creation import DatabaseCreation as MySQLDatabaseCreation
-
+from django.db.backends.base.validation import BaseDatabaseValidation
 
 class SphinxOperations(MySQLDatabaseOperations):
     compiler_module = "django_sphinx_db.backend.sphinx.compiler"
@@ -25,12 +25,17 @@ class SphinxCreation(MySQLDatabaseCreation):
         # NOOP, we created nothing, nothing to destroy.
         return
 
+class SphinxValidation(BaseDatabaseValidation):
+    def check(self, **kwargs):
+        return super(DatabaseValidation, self).check(**kwargs)
+        
 
 class DatabaseWrapper(MySQLDatabaseWrapper):
     def __init__(self, *args, **kwargs):
         super(DatabaseWrapper, self).__init__(*args, **kwargs)
         self.ops = SphinxOperations(self)
         self.creation = SphinxCreation(self)
+        self.validation = SphinxValidation(self)
         # The following can be useful for unit testing, with multiple databases
         # configured in Django, if one of them does not support transactions,
         # Django will fall back to using clear/create (instead of begin...rollback)
