@@ -13,8 +13,8 @@ class SphinxOperations(MySQLDatabaseOperations):
 class SphinxCreation(MySQLDatabaseCreation):
     def create_test_db(self, **kwargs):
         # NOOP, test using regular sphinx database.
-        if self.connection.settings_dict['TEST_NAME']:
-            test_name = self.connection.settings_dict['TEST_NAME']
+        if self.connection.settings_dict.get('TEST'):
+            test_name = self.connection.settings_dict.get('TEST')
             self.connection.close()
             self.connection.settings_dict['NAME'] = test_name
             cursor = self.connection.cursor()
