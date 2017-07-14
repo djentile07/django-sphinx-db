@@ -11,7 +11,7 @@ class SphinxOperations(MySQLDatabaseOperations):
 
 
 class SphinxCreation(MySQLDatabaseCreation):
-    def create_test_db(self, verbosity=1, autoclobber=False):
+    def create_test_db(self, **kwargs):
         # NOOP, test using regular sphinx database.
         if self.connection.settings_dict['TEST_NAME']:
             test_name = self.connection.settings_dict['TEST_NAME']
@@ -21,7 +21,7 @@ class SphinxCreation(MySQLDatabaseCreation):
             return test_name
         return self.connection.settings_dict['NAME']
 
-    def destroy_test_db(self, old_database_name, verbosity=1):
+    def destroy_test_db(self, old_database_name, **kwargs):
         # NOOP, we created nothing, nothing to destroy.
         return
 
