@@ -27,6 +27,8 @@ class SphinxValidation(BaseDatabaseValidation):
     def check_field_type(self, field, field_type):
         return []
         
+class SphinxIntrospection(BaseDatabaseIntrospection):
+    pass
 
 class DatabaseWrapper(MySQLDatabaseWrapper):
     def __init__(self, *args, **kwargs):
@@ -34,6 +36,7 @@ class DatabaseWrapper(MySQLDatabaseWrapper):
         self.ops = SphinxOperations(self)
         self.creation = SphinxCreation(self)
         self.validation = SphinxValidation(self)
+        self.introspection = SphinxIntrospection(self)
         # The following can be useful for unit testing, with multiple databases
         # configured in Django, if one of them does not support transactions,
         # Django will fall back to using clear/create (instead of begin...rollback)
