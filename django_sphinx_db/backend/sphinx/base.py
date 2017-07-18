@@ -2,6 +2,7 @@ from django.db.backends.mysql.base import DatabaseWrapper as MySQLDatabaseWrappe
 from django.db.backends.mysql.base import DatabaseOperations as MySQLDatabaseOperations
 from django.db.backends.mysql.creation import DatabaseCreation as MySQLDatabaseCreation
 from django.db.backends.base.validation import BaseDatabaseValidation
+from django.db.backends.mysql.introspection import BaseDatabaseIntrospection
 
 class SphinxOperations(MySQLDatabaseOperations):
     compiler_module = "django_sphinx_db.backend.sphinx.compiler"
