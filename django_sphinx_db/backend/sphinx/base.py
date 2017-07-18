@@ -29,7 +29,8 @@ class SphinxValidation(BaseDatabaseValidation):
         return []
         
 class SphinxIntrospection(BaseDatabaseIntrospection):
-    pass
+    def get_table_list(self, cursor):
+        return []
 
 class DatabaseWrapper(MySQLDatabaseWrapper):
     def __init__(self, *args, **kwargs):
