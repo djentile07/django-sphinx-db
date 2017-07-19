@@ -18,3 +18,6 @@ class SphinxRouter(object):
     def allow_relation(self, obj1, obj2, **kwargs):
         # Allow all relations...
         return True
+
+    def allow_migrate(db, app_label, model_name=None, **hints):
+        return False
