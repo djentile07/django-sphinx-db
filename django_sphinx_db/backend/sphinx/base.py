@@ -30,7 +30,7 @@ class SphinxValidation(BaseDatabaseValidation):
         
 class SphinxIntrospection(BaseDatabaseIntrospection):
     def get_table_list(self, cursor):
-        return []
+        return ["django_migrations"]
 
 class DatabaseWrapper(MySQLDatabaseWrapper):
     def __init__(self, *args, **kwargs):
