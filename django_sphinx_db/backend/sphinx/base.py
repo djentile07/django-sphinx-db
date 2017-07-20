@@ -49,3 +49,6 @@ class DatabaseWrapper(MySQLDatabaseWrapper):
         # support it.
         self.features.supports_transactions = True
         self.features.is_sql_auto_is_null_enabled = False
+
+    def schema_editor(self, *args, **kwargs):
+        print "This is readonly"
