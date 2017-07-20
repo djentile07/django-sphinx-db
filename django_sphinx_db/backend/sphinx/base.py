@@ -34,7 +34,11 @@ class SphinxIntrospection(BaseDatabaseIntrospection):
         return []
 
 class SphinxDatabaseSchemaEditor(DatabaseSchemaEditor):
-    pass
+    def create_model(self, model):
+        """
+        This is to try to make it read only
+        """
+        return
 
 class DatabaseWrapper(MySQLDatabaseWrapper):
     SchemaEditorClass = SphinxDatabaseSchemaEditor
