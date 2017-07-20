@@ -31,7 +31,7 @@ class SphinxValidation(BaseDatabaseValidation):
         
 class SphinxIntrospection(BaseDatabaseIntrospection):
     def table_names(self, cursor=None, include_views=False):
-        return []
+        return ["django_migrations"]
 
 class SphinxDatabaseSchemaEditor(DatabaseSchemaEditor):
     def create_model(self, model):
