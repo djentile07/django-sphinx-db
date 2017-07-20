@@ -29,8 +29,8 @@ class SphinxValidation(BaseDatabaseValidation):
         return []
         
 class SphinxIntrospection(BaseDatabaseIntrospection):
-    def get_table_list(self, cursor):
-        return ["django_migrations"]
+    def table_names(self, cursor=None, include_views=False):
+        return []
 
 class DatabaseWrapper(MySQLDatabaseWrapper):
     def __init__(self, *args, **kwargs):
