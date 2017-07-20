@@ -3,6 +3,7 @@ from django.db.backends.mysql.base import DatabaseOperations as MySQLDatabaseOpe
 from django.db.backends.mysql.creation import DatabaseCreation as MySQLDatabaseCreation
 from django.db.backends.base.validation import BaseDatabaseValidation
 from django.db.backends.mysql.introspection import BaseDatabaseIntrospection
+from django.db.backends.mysql.schema import DatabaseSchemaEditor
 
 class SphinxOperations(MySQLDatabaseOperations):
     compiler_module = "django_sphinx_db.backend.sphinx.compiler"
@@ -32,6 +33,9 @@ class SphinxIntrospection(BaseDatabaseIntrospection):
     def table_names(self, cursor=None, include_views=False):
         return []
 
+class SphinxDatabaseSchemaEditor(DatabaseSchemaEditor):
+    pass
+
 class DatabaseWrapper(MySQLDatabaseWrapper):
     def __init__(self, *args, **kwargs):
         super(DatabaseWrapper, self).__init__(*args, **kwargs)
@@ -50,5 +54,4 @@ class DatabaseWrapper(MySQLDatabaseWrapper):
         self.features.supports_transactions = True
         self.features.is_sql_auto_is_null_enabled = False
 
-    def schema_editor(self, *args, **kwargs):
-        print "This is readonly"
+        SchemaEditorClass = SphinxDatabaseSchemaEditor
