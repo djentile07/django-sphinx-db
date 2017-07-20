@@ -37,6 +37,7 @@ class SphinxDatabaseSchemaEditor(DatabaseSchemaEditor):
     pass
 
 class DatabaseWrapper(MySQLDatabaseWrapper):
+    SchemaEditorClass = SphinxDatabaseSchemaEditor
     def __init__(self, *args, **kwargs):
         super(DatabaseWrapper, self).__init__(*args, **kwargs)
         self.ops = SphinxOperations(self)
@@ -53,5 +54,3 @@ class DatabaseWrapper(MySQLDatabaseWrapper):
         # support it.
         self.features.supports_transactions = True
         self.features.is_sql_auto_is_null_enabled = False
-
-        SchemaEditorClass = SphinxDatabaseSchemaEditor
