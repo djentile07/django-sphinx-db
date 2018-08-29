@@ -10,7 +10,7 @@ versrel = version + '-' + release
 readme = os.path.join(os.path.dirname(__file__), 'README.rst')
 download_url = 'https://github.com/downloads/smartfile/django-sphinx-db' \
                            '/' + name + '-' + versrel + '.tar.gz'
-long_description = file(readme).read()
+long_description = open(readme).read()
 
 setup(
     name = name,
